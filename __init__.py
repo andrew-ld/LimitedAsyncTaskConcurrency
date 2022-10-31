@@ -36,7 +36,7 @@ class LimitedAsyncTaskConcurrency:
                 new_task_function, new_task_sentinel, new_task_arguments = get_from_queue_task.result()
 
                 try:
-                    new_task_coroutine = asyncio.create_task(new_task_function(*new_task_arguments))
+                    new_task_coroutine = asyncio.ensure_future(new_task_function(*new_task_arguments))
                 except Exception as task_create_error:
                     new_task_sentinel.set_exception(task_create_error)
                 else:
